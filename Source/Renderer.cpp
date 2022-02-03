@@ -61,8 +61,9 @@ bool Renderer::Init(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 
 void Renderer::BuildWorld()
 {
-	GeometryNode& craft1 = *this->m_nodes[0];
-	GeometryNode& craft2 = *this->m_nodes[1];
+	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
+	GeometryNode& craft2 = *this->m_nodes[OBJECTS::CRAFT_2];
+	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
 
 	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(-15.f, 0.f, 0.f));
 	craft1.m_aabb.center = glm::vec3(craft1.model_matrix * glm::vec4(craft1.m_aabb.center, 1.f));
@@ -72,6 +73,8 @@ void Renderer::BuildWorld()
 		glm::translate(glm::mat4(1.f), -craft2.m_aabb.center);
 
 	craft2.m_aabb.center = glm::vec3(craft2.model_matrix * glm::vec4(craft2.m_aabb.center, 1.f));
+
+	terrain.model_matrix = glm::mat4(1.f);
 
 	this->m_world_matrix = glm::mat4(1.f);
 }
@@ -243,31 +246,46 @@ bool Renderer::InitCommonItems()
 
 bool Renderer::InitGeometricMeshes()
 {
-	std::array<const char*, 1> assets = {
-		"Assets/game_assets/craft.obj", };
+	std::array<const char*, OBJECTS::SIZE_ALL> assets = {
+		"Assets/game_assets/craft.obj",
+		"Assets/game_assets/craft.obj",
+		"Assets/game_assets/terrain.obj" };
 
 	bool initialized = true;
 	OBJLoader loader;
 
-	auto& asset = assets[0];
-	GeometricMesh* mesh = loader.load(asset);
-
-	if (mesh != nullptr)
+	for (auto& asset : assets)
 	{
-		GeometryNode* node1 = new GeometryNode();
-		node1->Init("craft_1", mesh);
+		GeometricMesh* mesh = loader.load(asset);
 
-		GeometryNode* node2 = new GeometryNode();
-		node2->Init("craft_2", mesh);
+		if (mesh != nullptr)
+		{
+			/*
+			if (asset == "Assets/game_assets/craft.obj")
+			{
+				GeometryNode* node1 = new GeometryNode();
+				node1->Init("craft_1", mesh);
 
-		this->m_nodes.push_back(node1);
-		this->m_nodes.push_back(node2);
-		
-		delete mesh;
-	}
-	else
-	{
-		initialized = false;
+				GeometryNode* node2 = new GeometryNode();
+				node2->Init("craft_2", mesh);
+
+				this->m_nodes.push_back(node1);
+				this->m_nodes.push_back(node2);
+
+				delete mesh;
+			}
+			else
+			{*/
+				GeometryNode* node = new GeometryNode();
+				node->Init("", mesh);
+				this->m_nodes.push_back(node);
+				delete mesh;
+			//}
+		}
+		else
+		{
+			initialized = false;
+		}
 	}
 
 	return initialized;
@@ -282,10 +300,12 @@ void Renderer::Update(float dt)
 
 void Renderer::UpdateGeometry(float dt)
 {
-	GeometryNode& craft1 = *this->m_nodes[0];
-	GeometryNode& craft2 = *this->m_nodes[1];
+	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
+	GeometryNode& craft2 = *this->m_nodes[OBJECTS::CRAFT_2];
+	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
 	craft1.app_model_matrix = craft1.model_matrix;
 	craft2.app_model_matrix = craft2.model_matrix;
+	terrain.app_model_matrix = terrain.model_matrix;
 }
 
 void Renderer::UpdateCamera(float dt)

@@ -45,7 +45,8 @@ protected:
 	enum OBJECTS
 	{
 		CRAFT_1 = 0,
-		CRAFT_2 = 0,
+		CRAFT_2,
+		TERRAIN,
 		SIZE_ALL
 	};
 
