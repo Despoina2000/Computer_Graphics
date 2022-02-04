@@ -83,6 +83,7 @@ void Renderer::BuildWorld()
 void Renderer::InitCamera()
 {
 	this->m_camera_position = glm::vec3(-1.5, 2, 25);
+	//this->m_camera_position = glm::vec3(-1.5, 400, 25);
 	this->m_camera_target_position = glm::vec3(-1.5, 0, 0);
 	this->m_camera_up_vector = glm::vec3(0, 1, 0);
 
@@ -94,14 +95,14 @@ void Renderer::InitCamera()
 	this->m_projection_matrix = glm::perspective(
 		glm::radians(45.f),
 		this->m_screen_width / (float)this->m_screen_height,
-		0.1f, 500.f); // edit the last value to change the far clipping plane (draw distance)
+		0.1f, 800.f); // edit the last value to change the far clipping plane (draw distance)
 }
 
 bool Renderer::InitLights()
 {
-	this->m_light.SetColor(glm::vec3(500.f)); 
-	this->m_light.SetPosition(glm::vec3(0, 3, 4.5));
-	this->m_light.SetTarget(glm::vec3(0));
+	this->m_light.SetColor(glm::vec3(6000000.f));
+	this->m_light.SetPosition(glm::vec3(0, 1000, 0));
+	this->m_light.SetTarget(glm::vec3(0, 0, 0));
 	this->m_light.SetConeSize(40, 50);
 	this->m_light.CastShadow(true);
 	return true;
@@ -617,7 +618,7 @@ void Renderer::RenderGeometry()
 
 	m_geometry_program.Bind();
 
-	// Added to test lights
+	// Added to test shadows
 	/*
 	glm::mat4 proj = m_projection_matrix * m_view_matrix * m_world_matrix;
 
