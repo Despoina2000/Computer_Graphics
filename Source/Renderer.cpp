@@ -277,7 +277,7 @@ bool Renderer::InitGeometricMeshes()
 			else
 			{*/
 				GeometryNode* node = new GeometryNode();
-				node->Init("", mesh);
+				node->Init(asset, mesh);
 				this->m_nodes.push_back(node);
 				delete mesh;
 			//}
