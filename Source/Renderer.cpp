@@ -94,12 +94,12 @@ void Renderer::InitCamera()
 	this->m_projection_matrix = glm::perspective(
 		glm::radians(45.f),
 		this->m_screen_width / (float)this->m_screen_height,
-		0.1f, 100.f);
+		0.1f, 500.f); // edit the last value to change the far clipping plane (draw distance)
 }
 
 bool Renderer::InitLights()
 {
-	this->m_light.SetColor(glm::vec3(500.f));
+	this->m_light.SetColor(glm::vec3(500.f)); 
 	this->m_light.SetPosition(glm::vec3(0, 3, 4.5));
 	this->m_light.SetTarget(glm::vec3(0));
 	this->m_light.SetConeSize(40, 50);
