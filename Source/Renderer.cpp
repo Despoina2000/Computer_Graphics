@@ -75,6 +75,7 @@ void Renderer::BuildWorld()
 	craft2.m_aabb.center = glm::vec3(craft2.model_matrix * glm::vec4(craft2.m_aabb.center, 1.f));
 
 	terrain.model_matrix = glm::mat4(1.f);
+	terrain.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, -50.f, 0.f));
 
 	this->m_world_matrix = glm::mat4(1.f);
 }
@@ -99,10 +100,10 @@ void Renderer::InitCamera()
 bool Renderer::InitLights()
 {
 	this->m_light.SetColor(glm::vec3(500.f));
-	this->m_light.SetPosition(glm::vec3(0, 5, 15));
+	this->m_light.SetPosition(glm::vec3(0, 3, 4.5));
 	this->m_light.SetTarget(glm::vec3(0));
 	this->m_light.SetConeSize(40, 50);
-	this->m_light.CastShadow(false);
+	this->m_light.CastShadow(true);
 	return true;
 }
 
@@ -615,6 +616,29 @@ void Renderer::RenderGeometry()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_geometry_program.Bind();
+
+	// Added to test lights
+	/*
+	glm::mat4 proj = m_projection_matrix * m_view_matrix * m_world_matrix;
+
+	m_geometry_program.loadVec3("uniform_light_color", m_light.GetColor());
+	m_geometry_program.loadVec3("uniform_light_dir", m_light.GetDirection());
+	m_geometry_program.loadVec3("uniform_light_pos", m_light.GetPosition());
+
+	m_geometry_program.loadFloat("uniform_light_umbra", m_light.GetUmbra());
+	m_geometry_program.loadFloat("uniform_light_penumbra", m_light.GetPenumbra());
+
+	m_geometry_program.loadVec3("uniform_camera_pos", m_camera_position);
+	m_geometry_program.loadVec3("uniform_camera_dir", normalize(m_camera_target_position - m_camera_position));
+
+	m_geometry_program.loadMat4("uniform_light_projection_view", m_light.GetProjectionMatrix() * m_light.GetViewMatrix());
+	m_geometry_program.loadInt("uniform_cast_shadows", m_light.GetCastShadowsStatus() ? 1 : 0);
+
+	glActiveTexture(GL_TEXTURE2);
+	m_geometry_program.loadInt("uniform_shadow_map", 2);
+	glBindTexture(GL_TEXTURE_2D, m_light.GetShadowMapDepthTexture());
+	*/
+
 	RenderStaticGeometry();
 	auto e = glGetError();
 	RenderCollidableGeometry();
