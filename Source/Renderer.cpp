@@ -61,6 +61,7 @@ bool Renderer::Init(int SCREEN_WIDTH, int SCREEN_HEIGHT)
 
 void Renderer::BuildWorld()
 {
+	// Initialize geometry nodes
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
 	GeometryNode& craft2 = *this->m_nodes[OBJECTS::CRAFT_2];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
@@ -100,10 +101,10 @@ void Renderer::InitCamera()
 
 bool Renderer::InitLights()
 {
-	this->m_light.SetColor(glm::vec3(6000000.f));
-	this->m_light.SetPosition(glm::vec3(0, 1000, 0));
+	this->m_light.SetColor(glm::vec3(6000000.f)); // set the color (brightness) of the light
+	this->m_light.SetPosition(glm::vec3(0, 1000, 0)); // set the position of the light
 	this->m_light.SetTarget(glm::vec3(0, 0, 0));
-	this->m_light.SetConeSize(40, 50);
+	this->m_light.SetConeSize(40, 50); // set the umbra and the penumbra
 	this->m_light.CastShadow(true);
 	return true;
 }
