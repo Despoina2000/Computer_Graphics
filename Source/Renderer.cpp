@@ -1,3 +1,5 @@
+//#define DEBUG_CAMERA
+
 #include "Renderer.h"
 #include "GeometryNode.h"
 #include "Tools.h"
@@ -84,7 +86,9 @@ void Renderer::BuildWorld()
 void Renderer::InitCamera()
 {
 	this->m_camera_position = glm::vec3(-1.5, 2, 25);
-	//this->m_camera_position = glm::vec3(-1.5, 400, 25);
+#ifdef DEBUG_CAMERA
+	this->m_camera_position = glm::vec3(-1.5, 400, 25);
+#endif
 	this->m_camera_target_position = glm::vec3(-1.5, 0, 0);
 	this->m_camera_up_vector = glm::vec3(0, 1, 0);
 
