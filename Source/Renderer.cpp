@@ -65,17 +65,10 @@ void Renderer::BuildWorld()
 {
 	// Initialize geometry nodes
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
-	GeometryNode& craft2 = *this->m_nodes[OBJECTS::CRAFT_2];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
 
-	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(-15.f, 0.f, 0.f));
+	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 0.f));
 	craft1.m_aabb.center = glm::vec3(craft1.model_matrix * glm::vec4(craft1.m_aabb.center, 1.f));
-
-	craft2.model_matrix = glm::translate(glm::mat4(1.f), craft2.m_aabb.center) *
-		glm::rotate(glm::mat4(1.f), glm::radians(180.f), glm::vec3(0.f, 1.f, 0.f)) *
-		glm::translate(glm::mat4(1.f), -craft2.m_aabb.center);
-
-	craft2.m_aabb.center = glm::vec3(craft2.model_matrix * glm::vec4(craft2.m_aabb.center, 1.f));
 
 	terrain.model_matrix = glm::mat4(1.f);
 	terrain.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, -50.f, 0.f));
@@ -255,7 +248,6 @@ bool Renderer::InitGeometricMeshes()
 {
 	std::array<const char*, OBJECTS::SIZE_ALL> assets = {
 		"Assets/game_assets/craft.obj",
-		"Assets/game_assets/craft.obj",
 		"Assets/game_assets/terrain.obj" };
 
 	bool initialized = true;
@@ -308,10 +300,8 @@ void Renderer::Update(float dt)
 void Renderer::UpdateGeometry(float dt)
 {
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
-	GeometryNode& craft2 = *this->m_nodes[OBJECTS::CRAFT_2];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
 	craft1.app_model_matrix = craft1.model_matrix;
-	craft2.app_model_matrix = craft2.model_matrix;
 	terrain.app_model_matrix = terrain.model_matrix;
 }
 
