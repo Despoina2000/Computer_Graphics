@@ -657,6 +657,7 @@ void Renderer::RenderGeometry()
 
 void Renderer::RenderShadowMaps()
 {
+	// if the light source casts shadows
 	if (m_light.GetCastShadowsStatus())
 	{
 		int m_depth_texture_resolution = m_light.GetShadowMapResolution();
