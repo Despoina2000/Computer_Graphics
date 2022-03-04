@@ -16,7 +16,7 @@ uniform sampler2D uniform_tex_depth;
 float linearize(const in float depth)
 {
 	float near = 0.1;
-	float far = 30.0;
+	float far = 300000.0;
     float z = depth * 2.0 - 1.0; // [0, 1] -> [-1, 1]
     return ((2.0 * near * far) / (far + near - z * (far - near))) / far;
 }

@@ -1,4 +1,4 @@
-//#define DEBUG_CAMERA
+#define DEBUG_CAMERA
 
 #include "Renderer.h"
 #include "GeometryNode.h"
@@ -67,7 +67,7 @@ void Renderer::BuildWorld()
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
 
-	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 0.f));
+	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -20.f));
 	craft1.m_aabb.center = glm::vec3(craft1.model_matrix * glm::vec4(craft1.m_aabb.center, 1.f));
 
 	terrain.model_matrix = glm::mat4(1.f);
@@ -80,7 +80,7 @@ void Renderer::InitCamera()
 {
 	this->m_camera_position = glm::vec3(-1.5, 2, 25);
 #ifdef DEBUG_CAMERA
-	this->m_camera_position = glm::vec3(-1.5, 400, 25);
+	this->m_camera_position = glm::vec3(0, 500, 25);
 #endif
 	this->m_camera_target_position = glm::vec3(-1.5, 0, 0);
 	this->m_camera_up_vector = glm::vec3(0, 1, 0);
@@ -98,10 +98,10 @@ void Renderer::InitCamera()
 
 bool Renderer::InitLights()
 {
-	this->m_light.SetColor(glm::vec3(600000.f)); // set the color (brightness) of the light
-	this->m_light.SetPosition(glm::vec3(0, 110, 20)); // set the position of the light
-	this->m_light.SetTarget(glm::vec3(0, 20, 30));
-	this->m_light.SetConeSize(120, 200); // set the umbra and the penumbra
+	this->m_light.SetColor(glm::vec3(400000.f)); // set the color (brightness) of the light
+	this->m_light.SetPosition(glm::vec3(0, 150, 20)); // set the position of the light
+	this->m_light.SetTarget(glm::vec3(0, 0, 0));
+	this->m_light.SetConeSize(180, 190); // set the umbra and the penumbra
 	this->m_light.CastShadow(true);
 	return true;
 }
