@@ -13,7 +13,7 @@ LightNode::LightNode()
 	SetPosition(m_light_position);
 	SetConeSize(60, 60);
 
-	m_cast_shadow = false;
+	m_cast_shadow = true;
 	m_shadow_map_resolution = 1024;
 	m_shadow_map_bias = 0.001;
 	m_shadow_map_texture = 0;
@@ -90,7 +90,7 @@ void LightNode::SetConeSize(float umbra, float penumbra)
 	m_penumbra = penumbra;
 
 	float near_clipping_range = 0.1f;
-	float far_clipping_range = 30.f;
+	float far_clipping_range = 80000.f;
 	
 	float h = near_clipping_range * glm::tan(glm::radians(m_penumbra * 0.5f));
 	m_projection_matrix = glm::frustum(-h, h, -h, h, near_clipping_range, far_clipping_range);

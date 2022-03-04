@@ -142,7 +142,8 @@ vec3 fresnel(
 	const in float VdotH,
 	const in float metallic)
 {
-	const vec3 f0 = mix(reflectance, diffColor, metallic);
+	/*const vec3 f0 = mix(reflectance, diffColor, metallic);*/
+	vec3 f0 = mix(reflectance, diffColor, metallic);
 	float u = 1.0 - VdotH;
 	float u5 = (u * u) * (u * u) * u;
 	return min(vec3(1.0), f0  + (vec3(1.0) - f0) * u5);
@@ -244,7 +245,7 @@ void main(void)
 	// check if we have shadows
 	float shadow_value = (uniform_cast_shadows == 1) ? shadow(pos_wcs.xyz) : 1.0;
 
-#if 0
+#if 1
 	vec3 brdf = blinn_phong(surfToEye, surfToLight, pos_wcs.xyz,
 		normal_wcs.xyz,
 		albedo.xyz, mask);
