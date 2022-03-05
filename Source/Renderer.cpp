@@ -1,4 +1,4 @@
-#define DEBUG_CAMERA
+//#define DEBUG_CAMERA
 
 #include "Renderer.h"
 #include "GeometryNode.h"
@@ -99,9 +99,9 @@ void Renderer::InitCamera()
 bool Renderer::InitLights()
 {
 	this->m_light.SetColor(glm::vec3(400000.f)); // set the color (brightness) of the light
-	this->m_light.SetPosition(glm::vec3(0, 150, 20)); // set the position of the light
+	this->m_light.SetPosition(glm::vec3(0, 120, -50)); // set the position of the light
 	this->m_light.SetTarget(glm::vec3(0, 0, 0));
-	this->m_light.SetConeSize(180, 190); // set the umbra and the penumbra
+	this->m_light.SetConeSize(150, 170); // set the umbra and the penumbra
 	this->m_light.CastShadow(true);
 	return true;
 }

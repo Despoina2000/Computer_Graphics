@@ -250,11 +250,11 @@ void main(void)
 		normal_wcs.xyz,
 		albedo.xyz, mask);
 
-	float spotEffect = 1.0;//compute_spotlight(surfToLight);
+	float spotEffect = compute_spotlight(surfToLight);
 
-	out_color = vec4(shadow_value * brdf * spotEffect, 1.0);
+	out_color = vec4((shadow_value*(1-0.5)+0.5) * brdf * spotEffect, 1.0);
 #else
-	out_color = vec4(cook_torrance(surfToEye, surfToLight, pos_wcs.xyz,
+	out_color = vec4(shadow_value * cook_torrance(surfToEye, surfToLight, pos_wcs.xyz,
 		normal_wcs.xyz,
 		albedo.xyz, mask), 1.0);
 #endif
