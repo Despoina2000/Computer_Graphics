@@ -161,7 +161,8 @@ int main(int argc, char *argv[])
 
 				if (mouse_button_pressed)
 				{
-					renderer->CameraLook(prev_mouse_position - glm::vec2(x, y));
+					//renderer->CameraLook(prev_mouse_position - glm::vec2(x, y));
+					renderer->RotateCraft(glm::vec2(x, y));
 					prev_mouse_position = glm::vec2(x, y);
 				}
 			}

@@ -1,6 +1,15 @@
 #ifndef BIM_ENGINE_RENDERER_H
 #define BIM_ENGINE_RENDERER_H
 
+
+//#define DEBUG_CAMERA
+#define CRAFT_SPEED 0.02
+#define ROTATION_SPEED 0.01
+#define INVERT_HORIZONTAL_AXIS -1 // -1 == inverted | 1 == non-inverted
+#define INVERT_VERTICAL_AXIS -1 // -1 == inverted | 1 == non-inverted
+#define DRAW_DISTANCE 1000.f
+
+
 #include "GLEW\glew.h"
 #include "glm\glm.hpp"
 #include <vector>
@@ -24,6 +33,7 @@ protected:
 	glm::vec3										m_camera_up_vector;
 	glm::vec2										m_camera_movement;
 	glm::vec2										m_camera_look_angle_destination;
+	glm::vec2										m_craft_facing;
 	
 	float m_continous_time;
 
@@ -87,6 +97,9 @@ public:
 	void										CameraMoveLeft(bool enable);
 	void										CameraMoveRight(bool enable);
 	void										CameraLook(glm::vec2 lookDir);
+
+	void										MoveCraft(float dt);
+	void										RotateCraft(glm::vec2 craftDir);
 };
 
 #endif

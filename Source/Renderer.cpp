@@ -1,5 +1,3 @@
-//#define DEBUG_CAMERA
-
 #include "Renderer.h"
 #include "GeometryNode.h"
 #include "Tools.h"
@@ -67,7 +65,7 @@ void Renderer::BuildWorld()
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
 
-	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, -20.f));
+	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 0.f));
 	craft1.m_aabb.center = glm::vec3(craft1.model_matrix * glm::vec4(craft1.m_aabb.center, 1.f));
 
 	terrain.model_matrix = glm::mat4(1.f);
@@ -93,7 +91,7 @@ void Renderer::InitCamera()
 	this->m_projection_matrix = glm::perspective(
 		glm::radians(45.f),
 		this->m_screen_width / (float)this->m_screen_height,
-		0.1f, 80000.f); // edit the last value to change the far clipping plane (draw distance)
+		0.1f, DRAW_DISTANCE); // edit the last value to change the far clipping plane (draw distance)
 }
 
 bool Renderer::InitLights()
@@ -294,6 +292,7 @@ void Renderer::Update(float dt)
 {
 	this->UpdateGeometry(dt);
 	this->UpdateCamera(dt);
+	this->MoveCraft(dt);
 	m_continous_time += dt;
 }
 
@@ -326,6 +325,30 @@ void Renderer::UpdateCamera(float dt)
 	m_camera_target_position = m_camera_position + direction * glm::distance(m_camera_position, m_camera_target_position);
 
 	m_view_matrix = glm::lookAt(m_camera_position, m_camera_target_position, m_camera_up_vector);
+}
+
+void Renderer::MoveCraft(float dt)
+{
+	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1]; // get craft node
+	craft1.model_matrix = glm::translate(craft1.model_matrix, glm::vec3(0, 0, -CRAFT_SPEED)); // move craft forward
+}
+
+void Renderer::RotateCraft(glm::vec2 craftDir)
+{
+	m_craft_facing = craftDir;
+
+	glm::vec2 screen_center = glm::vec2(m_screen_width / 2, m_screen_height /2 ); // get the center of the screen
+
+	glm::vec2 dist_from_screen_center = glm::vec2(screen_center.x - m_craft_facing.x, screen_center.y - m_craft_facing.y); // calculate the distance between the mouse coordinates and the center of the screen
+
+	glm::vec2 rotation_angles = glm::vec2(dist_from_screen_center.x * ROTATION_SPEED / screen_center.x, dist_from_screen_center.y * ROTATION_SPEED / screen_center.y); // calculate the rotation angles
+
+	rotation_angles *= glm::vec2(INVERT_HORIZONTAL_AXIS, INVERT_VERTICAL_AXIS); // invert the angles if necessary
+
+	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1]; // retrieve the craft object
+	// Rotate the craft
+	craft1.model_matrix = glm::rotate(craft1.model_matrix, rotation_angles.x, glm::vec3(0.f, 1.f, 0.f));
+	craft1.model_matrix = glm::rotate(craft1.model_matrix, rotation_angles.y, glm::vec3(1.f, 0.f, 0.f));
 }
 
 bool Renderer::ReloadShaders()
