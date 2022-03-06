@@ -7,7 +7,7 @@
 #define ROTATION_SPEED 0.01
 #define INVERT_HORIZONTAL_AXIS -1 // -1 == inverted | 1 == non-inverted
 #define INVERT_VERTICAL_AXIS -1 // -1 == inverted | 1 == non-inverted
-#define DRAW_DISTANCE 1000.f
+#define DRAW_DISTANCE 1300.f
 
 
 #include "GLEW\glew.h"

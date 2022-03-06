@@ -23,7 +23,7 @@ uniform float uniform_light_penumbra;
 
 uniform mat4 uniform_light_projection_view;
 uniform int uniform_cast_shadows;
-uniform float uniform_constant_bias = 0.0002;
+uniform float uniform_constant_bias = 0.00004;
 
 uniform sampler2D uniform_shadow_map;
 

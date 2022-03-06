@@ -78,7 +78,7 @@ void Renderer::InitCamera()
 {
 	this->m_camera_position = glm::vec3(-1.5, 2, 25);
 #ifdef DEBUG_CAMERA
-	this->m_camera_position = glm::vec3(0, 500, 25);
+	this->m_camera_position = glm::vec3(0, 1100, 25);
 #endif
 	this->m_camera_target_position = glm::vec3(-1.5, 0, 0);
 	this->m_camera_up_vector = glm::vec3(0, 1, 0);
@@ -96,8 +96,8 @@ void Renderer::InitCamera()
 
 bool Renderer::InitLights()
 {
-	this->m_light.SetColor(glm::vec3(400000.f)); // set the color (brightness) of the light
-	this->m_light.SetPosition(glm::vec3(0, 120, -50)); // set the position of the light
+	this->m_light.SetColor(glm::vec3(1000000.f)); // set the color (brightness) of the light
+	this->m_light.SetPosition(glm::vec3(0, 300, -50)); // set the position of the light
 	this->m_light.SetTarget(glm::vec3(0, 0, 0));
 	this->m_light.SetConeSize(150, 170); // set the umbra and the penumbra
 	this->m_light.CastShadow(true);
