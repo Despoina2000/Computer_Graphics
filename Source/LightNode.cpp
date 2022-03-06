@@ -14,7 +14,7 @@ LightNode::LightNode()
 	SetConeSize(60, 60);
 
 	m_cast_shadow = true;
-	m_shadow_map_resolution = 1024*20;
+	m_shadow_map_resolution = SHADOW_MAP_RESOLUTION;
 	m_shadow_map_bias = 0.001;
 	m_shadow_map_texture = 0;
 	m_shadow_map_fbo = 0;

@@ -1,6 +1,8 @@
 #ifndef SPOTLIGHT_NODE_H
 #define SPOTLIGHT_NODE_H
 
+#define SHADOW_MAP_RESOLUTION 1024*4
+
 #include "glm/glm.hpp"
 
 #include <unordered_map>
