@@ -12,6 +12,7 @@ newmtl TerrainMAT
 	Kd 1.0000 1.0000 1.0000
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
+	map_Ka terrain_Lightmap.png
 	map_Kd terrain_BaseMap.png
 	map_Ks terrain_MaskMap.png
 	map_bump terrain_Normal.png
