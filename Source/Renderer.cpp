@@ -1,3 +1,6 @@
+#define DEBUG_CAMERA
+
+
 #include "Renderer.h"
 #include "GeometryNode.h"
 #include "Tools.h"
@@ -64,12 +67,16 @@ void Renderer::BuildWorld()
 	// Initialize geometry nodes
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
+	GeometryNode& collision = *this->m_nodes[OBJECTS::COLLISION_HULL];
 
 	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 0.f));
 	craft1.m_aabb.center = glm::vec3(craft1.model_matrix * glm::vec4(craft1.m_aabb.center, 1.f));
 
 	terrain.model_matrix = glm::mat4(1.f);
 	terrain.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, -50.f, 0.f));
+
+	collision.model_matrix = glm::mat4(1.f);
+	collision.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, -50.f, 0.f));
 
 	this->m_world_matrix = glm::mat4(1.f);
 }
@@ -246,7 +253,8 @@ bool Renderer::InitGeometricMeshes()
 {
 	std::array<const char*, OBJECTS::SIZE_ALL> assets = {
 		"Assets/game_assets/craft.obj",
-		"Assets/game_assets/terrain.obj" };
+		"Assets/game_assets/terrain.obj" // , "Assets/game_assets/collision_hull.obj"
+};
 
 	bool initialized = true;
 	OBJLoader loader;
@@ -284,6 +292,12 @@ bool Renderer::InitGeometricMeshes()
 			initialized = false;
 		}
 	}
+	//Collision_hull object 
+	GeometricMesh* mesh = loader.load("Assets/game_assets/collision_hull.obj");
+	CollidableNode* node = new CollidableNode();
+	node->Init("Assets/game_assets/collision_hull.obj", mesh);
+	this->m_collidables_nodes.push_back(node);//we are using the collidabe node not the m_node as the rest assets
+	delete mesh;
 
 	return initialized;
 }
@@ -300,8 +314,10 @@ void Renderer::UpdateGeometry(float dt)
 {
 	GeometryNode& craft1 = *this->m_nodes[OBJECTS::CRAFT_1];
 	GeometryNode& terrain = *this->m_nodes[OBJECTS::TERRAIN];
+	//GeometryNode& collision = *this->m_nodes[OBJECTS::COLLISION_HULL];
 	craft1.app_model_matrix = craft1.model_matrix;
 	terrain.app_model_matrix = terrain.model_matrix;
+	//collision.app_model_matrix = collision.model_matrix;
 }
 
 void Renderer::UpdateCamera(float dt)

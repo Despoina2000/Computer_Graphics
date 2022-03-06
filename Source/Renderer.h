@@ -56,6 +56,7 @@ protected:
 	{
 		CRAFT_1 = 0,
 		TERRAIN,
+		COLLISION_HULL,
 		SIZE_ALL
 	};
 
