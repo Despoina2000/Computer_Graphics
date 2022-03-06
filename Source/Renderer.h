@@ -3,11 +3,11 @@
 
 
 //#define DEBUG_CAMERA
-#define CRAFT_SPEED 0.02
-#define ROTATION_SPEED 0.01
+#define CRAFT_SPEED 0.04 // adjust the speed of the craft
+#define ROTATION_SPEED 0.01 // adjust how "fast" (how big the rotation angle is) the craft rotates based on the mouse input
 #define INVERT_HORIZONTAL_AXIS -1 // -1 == inverted | 1 == non-inverted
 #define INVERT_VERTICAL_AXIS -1 // -1 == inverted | 1 == non-inverted
-#define DRAW_DISTANCE 1300.f
+#define DRAW_DISTANCE 2500.f // adjust draw distance-far clipping plane
 
 
 #include "GLEW\glew.h"
@@ -34,6 +34,7 @@ protected:
 	glm::vec2										m_camera_movement;
 	glm::vec2										m_camera_look_angle_destination;
 	glm::vec2										m_craft_facing;
+	glm::vec3										m_craft_position;
 	
 	float m_continous_time;
 

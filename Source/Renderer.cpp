@@ -67,6 +67,7 @@ void Renderer::BuildWorld()
 
 	craft1.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, 0.f, 0.f));
 	craft1.m_aabb.center = glm::vec3(craft1.model_matrix * glm::vec4(craft1.m_aabb.center, 1.f));
+	m_craft_position = glm::vec3(0.f, 0.f, 0.f);
 
 	terrain.model_matrix = glm::mat4(1.f);
 	terrain.model_matrix = glm::translate(glm::mat4(1.f), glm::vec3(0.f, -50.f, 0.f));
@@ -257,27 +258,10 @@ bool Renderer::InitGeometricMeshes()
 
 		if (mesh != nullptr)
 		{
-			/*
-			if (asset == "Assets/game_assets/craft.obj")
-			{
-				GeometryNode* node1 = new GeometryNode();
-				node1->Init("craft_1", mesh);
-
-				GeometryNode* node2 = new GeometryNode();
-				node2->Init("craft_2", mesh);
-
-				this->m_nodes.push_back(node1);
-				this->m_nodes.push_back(node2);
-
-				delete mesh;
-			}
-			else
-			{*/
-				GeometryNode* node = new GeometryNode();
-				node->Init(asset, mesh);
-				this->m_nodes.push_back(node);
-				delete mesh;
-			//}
+			GeometryNode* node = new GeometryNode();
+			node->Init(asset, mesh);
+			this->m_nodes.push_back(node);
+			delete mesh;
 		}
 		else
 		{
@@ -308,12 +292,12 @@ void Renderer::UpdateCamera(float dt)
 {
 	glm::vec3 direction = glm::normalize(m_camera_target_position - m_camera_position);
 
-	m_camera_position = m_camera_position + (m_camera_movement.x * 5.f * dt) * direction;
+	m_camera_position = m_camera_position + (m_camera_movement.x * 25.f * dt) * direction;
 	m_camera_target_position = m_camera_target_position + (m_camera_movement.x * 5.f * dt) * direction;
 
 	glm::vec3 right = glm::normalize(glm::cross(direction, m_camera_up_vector));
 
-	m_camera_position = m_camera_position + (m_camera_movement.y * 5.f * dt) * right;
+	m_camera_position = m_camera_position + (m_camera_movement.y * 25.f * dt) * right;
 	m_camera_target_position = m_camera_target_position + (m_camera_movement.y * 5.f * dt) * right;
 
 	float speed = glm::pi<float>() * 0.002;
@@ -323,6 +307,7 @@ void Renderer::UpdateCamera(float dt)
 
 	direction = rotation * glm::vec4(direction, 0.f);
 	m_camera_target_position = m_camera_position + direction * glm::distance(m_camera_position, m_camera_target_position);
+
 
 	m_view_matrix = glm::lookAt(m_camera_position, m_camera_target_position, m_camera_up_vector);
 }
@@ -337,7 +322,7 @@ void Renderer::RotateCraft(glm::vec2 craftDir)
 {
 	m_craft_facing = craftDir;
 
-	glm::vec2 screen_center = glm::vec2(m_screen_width / 2, m_screen_height /2 ); // get the center of the screen
+	glm::vec2 screen_center = glm::vec2(m_screen_width / 2, m_screen_height / 2); // get the center of the screen
 
 	glm::vec2 dist_from_screen_center = glm::vec2(screen_center.x - m_craft_facing.x, screen_center.y - m_craft_facing.y); // calculate the distance between the mouse coordinates and the center of the screen
 
@@ -635,28 +620,6 @@ void Renderer::RenderGeometry()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_geometry_program.Bind();
-
-	// Added to test shadows
-	/*
-	glm::mat4 proj = m_projection_matrix * m_view_matrix * m_world_matrix;
-
-	m_geometry_program.loadVec3("uniform_light_color", m_light.GetColor());
-	m_geometry_program.loadVec3("uniform_light_dir", m_light.GetDirection());
-	m_geometry_program.loadVec3("uniform_light_pos", m_light.GetPosition());
-
-	m_geometry_program.loadFloat("uniform_light_umbra", m_light.GetUmbra());
-	m_geometry_program.loadFloat("uniform_light_penumbra", m_light.GetPenumbra());
-
-	m_geometry_program.loadVec3("uniform_camera_pos", m_camera_position);
-	m_geometry_program.loadVec3("uniform_camera_dir", normalize(m_camera_target_position - m_camera_position));
-
-	m_geometry_program.loadMat4("uniform_light_projection_view", m_light.GetProjectionMatrix() * m_light.GetViewMatrix());
-	m_geometry_program.loadInt("uniform_cast_shadows", m_light.GetCastShadowsStatus() ? 1 : 0);
-
-	glActiveTexture(GL_TEXTURE2);
-	m_geometry_program.loadInt("uniform_shadow_map", 2);
-	glBindTexture(GL_TEXTURE_2D, m_light.GetShadowMapDepthTexture());
-	*/
 
 	RenderStaticGeometry();
 	auto e = glGetError();
