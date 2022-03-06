@@ -292,12 +292,12 @@ bool Renderer::InitGeometricMeshes()
 			initialized = false;
 		}
 	}
-	//Collision_hull object 
+	/* //Collision_hull object
 	GeometricMesh* mesh = loader.load("Assets/game_assets/collision_hull.obj");
 	CollidableNode* node = new CollidableNode();
 	node->Init("Assets/game_assets/collision_hull.obj", mesh);
 	this->m_collidables_nodes.push_back(node);//we are using the collidabe node not the m_node as the rest assets
-	delete mesh;
+	delete mesh;*/
 
 	return initialized;
 }
@@ -494,7 +494,17 @@ void Renderer::RenderStaticGeometry()
 		glBindVertexArray(0);
 	}
 }
-
+void Renderer::CraftCollision() {
+		float_t isectT = 0.f;
+		int32_t primID = -1;
+		OBJLoader loader;
+		GeometricMesh* mesh = loader.load("Assets/game_assets/collision_hull.obj");
+		CollidableNode* node = new CollidableNode();
+		node->Init("Assets/game_assets/collision_hull.obj", mesh);
+		//craft collision
+		node->intersectRay(m_craft_position, glm::vec3(m_craft_facing, 0), m_world_matrix, isectT, primID);
+		delete mesh;
+}
 void Renderer::RenderCollidableGeometry()
 {
 	glm::mat4 proj = m_projection_matrix * m_view_matrix * m_world_matrix;
@@ -509,6 +519,8 @@ void Renderer::RenderCollidableGeometry()
 
 		//if (node->intersectRay(m_camera_position, camera_dir, m_world_matrix, isectT, primID)) continue;
 		//node->intersectRay(m_camera_position, camera_dir, m_world_matrix, isectT, primID);
+
+		
 
 		glBindVertexArray(node->m_vao);
 
