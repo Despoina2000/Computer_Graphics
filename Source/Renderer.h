@@ -28,7 +28,6 @@ protected:
 	glm::mat4										m_world_matrix;
 	glm::mat4										m_view_matrix;
 	glm::mat4										m_projection_matrix;
-	glm::vec3										m_craft_position;
 	glm::vec3										m_camera_position;
 	glm::vec3										m_camera_target_position;
 	glm::vec3										m_camera_up_vector;
@@ -50,7 +49,6 @@ protected:
 	void RenderGeometry();
 	void RenderDeferredShading();
 	void RenderStaticGeometry();
-	void CraftCollision();
 	void RenderCollidableGeometry();
 	void RenderShadowMaps();
 	void RenderPostProcess();
@@ -59,7 +57,6 @@ protected:
 	{
 		CRAFT_1 = 0,
 		TERRAIN,
-		COLLISION_HULL,
 		SIZE_ALL
 	};
 

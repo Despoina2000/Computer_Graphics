@@ -4,9 +4,7 @@
 
 CollidableNode::CollidableNode(void) :
     GeometryNode()
-{
-    /*Empty*/
-}
+{ /*Empty*/ }
 
 CollidableNode::~CollidableNode(void) { /* Empty */ }
 
