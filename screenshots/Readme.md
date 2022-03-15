@@ -10,7 +10,7 @@
 <img src="https://github.com/Despoina2000/Computer_Graphics/blob/main/screenshots/unknown2.png" width=350 >
 </div>
 
-- ### Craft wit Terrain's skin
+- ### Craft with Terrain's skin
 <div style="text-align:center;">
 <img src="https://github.com/Despoina2000/Computer_Graphics/blob/main/screenshots/unknown3.png" width=350 >
 <img src="https://github.com/Despoina2000/Computer_Graphics/blob/main/screenshots/unknown4.png" width=350 >
