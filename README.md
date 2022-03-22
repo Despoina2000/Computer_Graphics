@@ -33,5 +33,5 @@ Blinn-Phong or Cook-Torrance.
 
 ## Team Members
 - [Achilleas Aimilios Matthes](https://github.com/AchillMt)
-- [Michael Isidore Oikonomou](https://github.com/mikonomou)
+- [Michalis Ikonomou (Michail Isidoros Oikonomou)](https://github.com/mikonomou)
 - [Despoina Papadopoulou](https://github.com/Despoina2000)
